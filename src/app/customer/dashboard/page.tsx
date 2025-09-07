@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { Coffee, Gift, Star, History, QrCode, MapPin, Phone } from 'lucide-react';
@@ -40,7 +40,7 @@ interface Reward {
   };
 }
 
-export default function CustomerDashboard() {
+function CustomerDashboardContent() {
   const searchParams = useSearchParams();
   const shopId = searchParams.get('shop');
   
@@ -330,5 +330,22 @@ export default function CustomerDashboard() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function CustomerDashboard() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50">
+        <div className="flex items-center justify-center min-h-screen">
+          <div className="text-center">
+            <Coffee className="h-8 w-8 text-amber-600 animate-spin mx-auto mb-4" />
+            <p className="text-gray-600">Loading dashboard...</p>
+          </div>
+        </div>
+      </div>
+    }>
+      <CustomerDashboardContent />
+    </Suspense>
   );
 }

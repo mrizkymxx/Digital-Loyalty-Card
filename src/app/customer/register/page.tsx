@@ -1,11 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Coffee, Smartphone, Eye, EyeOff } from 'lucide-react';
 
-export default function CustomerRegisterPage() {
+function CustomerRegisterContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const shopId = searchParams.get('shop');
@@ -187,5 +187,22 @@ export default function CustomerRegisterPage() {
         </form>
       </div>
     </div>
+  );
+}
+
+export default function CustomerRegisterPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50">
+        <div className="flex items-center justify-center min-h-screen">
+          <div className="text-center">
+            <Coffee className="h-8 w-8 text-amber-600 animate-spin mx-auto mb-4" />
+            <p className="text-gray-600">Loading registration...</p>
+          </div>
+        </div>
+      </div>
+    }>
+      <CustomerRegisterContent />
+    </Suspense>
   );
 }

@@ -150,7 +150,40 @@ Sistem loyalitas digital untuk coffee shop yang memungkinkan pelanggan mengumpul
 
 ## 🚀 Deployment
 
-### Vercel (Recommended)
+### Netlify (Recommended for Static Hosting)
+
+#### Option 1: Deploy via GitHub Integration
+1. **Fork/Clone** this repository to your GitHub account
+2. **Go to** [Netlify](https://www.netlify.com) and sign up/login
+3. **Click** "New site from Git" → Connect to GitHub
+4. **Select** your `Digital-Loyalty-Card` repository
+5. **Configure build settings:**
+   - Build command: `npm run netlify-build`
+   - Publish directory: `.next`
+6. **Set environment variables** in Netlify dashboard:
+   ```bash
+   DATABASE_URL=file:./dev.db
+   NEXTAUTH_SECRET=your-super-secret-key-here
+   NEXTAUTH_URL=https://your-site-name.netlify.app
+   ```
+7. **Deploy** - Netlify will automatically build and deploy
+
+#### Option 2: Deploy via Netlify CLI
+```bash
+# Install Netlify CLI
+npm install -g netlify-cli
+
+# Login to Netlify
+netlify login
+
+# Build for production
+npm run netlify-build
+
+# Deploy to Netlify
+netlify deploy --prod --dir=.next
+```
+
+### Vercel (Alternative)
 ```bash
 # Install Vercel CLI
 npm i -g vercel

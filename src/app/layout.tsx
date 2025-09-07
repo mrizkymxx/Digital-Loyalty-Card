@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Coffee Loyalty Card - Digital Loyalty untuk Coffee Shop",
+  title: "Digital Loyalty Card",
   description: "Sistem loyalitas digital untuk coffee shop Indonesia. Kumpulkan poin setiap pembelian kopi dan dapatkan reward menarik. Mirip StampMe untuk coffee shop lokal.",
   keywords: "coffee loyalty card, digital loyalty, coffee shop, poin kopi, reward kopi, loyalty program, coffee indonesia",
   authors: [{ name: "Muhammad Rizky" }],

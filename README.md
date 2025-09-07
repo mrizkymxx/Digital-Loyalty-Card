@@ -1,36 +1,225 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ☕ Digital Loyalty Card System
 
-## Getting Started
+Sistem loyalitas digital untuk coffee shop yang memungkinkan pelanggan mengumpulkan poin dan menukar reward melalui aplikasi web modern.
 
-First, run the development server:
+## 🚀 Fitur Utama
 
+### Untuk Pelanggan
+- ✅ Registrasi dan login mudah
+- ✅ Scan QR code untuk bergabung dengan coffee shop
+- ✅ Kumpulkan poin otomatis setiap pembelian
+- ✅ Dashboard untuk melihat poin dan riwayat transaksi
+- ✅ Tukar poin dengan reward menarik
+- ✅ Kartu digital yang responsif mobile-friendly
+
+### Untuk Merchant (Coffee Shop)
+- ✅ Registrasi coffee shop dengan informasi lengkap
+- ✅ Dashboard analytics dengan statistik penjualan
+- ✅ QR code otomatis untuk registrasi pelanggan
+- ✅ Kelola reward dan program loyalitas
+- ✅ Monitor transaksi dan pelanggan loyal
+- ✅ Export data untuk analisis
+
+## 🛠️ Tech Stack
+
+- **Frontend**: Next.js 14+ dengan App Router
+- **Styling**: Tailwind CSS
+- **Database**: SQLite dengan Prisma ORM
+- **Authentication**: Custom auth system
+- **QR Code**: qrcode & react-qr-code libraries
+- **Icons**: Lucide React
+- **Language**: TypeScript
+
+## 📋 Prerequisite
+
+- Node.js 18+ 
+- npm atau yarn
+- Git
+
+## 🚀 Installation & Setup
+
+1. **Clone repository**
+   ```bash
+   git clone <repository-url>
+   cd digitalloyaltycard
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Setup environment variables**
+   ```bash
+   # File .env sudah tersedia dengan konfigurasi default
+   # Untuk production, ubah nilai berikut:
+   NEXTAUTH_SECRET="your-production-secret-key"
+   NEXTAUTH_URL="https://yourdomain.com"
+   ```
+
+4. **Setup database**
+   ```bash
+   # Generate Prisma client
+   npx prisma generate
+   
+   # Run database migrations
+   npx prisma migrate dev --name init
+   ```
+
+5. **Run development server**
+   ```bash
+   npm run dev
+   ```
+
+6. **Open browser**
+   ```
+   http://localhost:3000
+   ```
+
+## 📊 Database Schema
+
+### Users
+- Customer dan Merchant data
+- Authentication information
+- Role-based access control
+
+### Coffee Shops
+- Shop information dan owner relationship
+- QR code untuk customer registration
+- Business details
+
+### Loyalty Cards
+- Link antara customer dan coffee shop
+- Point tracking dan total spending
+- Unique constraint per customer-shop pair
+
+### Transactions
+- Purchase dan reward redemption records
+- Point calculation dan tracking
+- Payment method information
+
+### Rewards
+- Configurable reward programs
+- Point requirements dan values
+- Redemption tracking
+
+## 🎯 User Flow
+
+### Customer Journey
+1. **Registration**: Scan QR code di coffee shop atau register manual
+2. **Purchase**: Beli kopi dan bayar via QRIS/e-wallet  
+3. **Points**: Sistem otomatis menambah poin ke kartu digital
+4. **Rewards**: Tukar poin dengan kopi gratis atau diskon
+5. **Loyalty**: Tracking progress menuju reward berikutnya
+
+### Merchant Journey
+1. **Setup**: Daftar coffee shop dengan informasi lengkap
+2. **QR Display**: Print dan tampilkan QR code untuk customer registration
+3. **Automation**: Sistem otomatis track transaksi dan poin
+4. **Analytics**: Monitor customer loyalty dan revenue metrics
+5. **Management**: Kelola reward programs dan customer incentives
+
+## 🔧 Configuration
+
+### Default Rewards
+- **Kopi Gratis**: 10 poin = 1 free coffee (Rp 25.000 value)
+- **Diskon 50%**: 5 poin = 50% discount next purchase
+
+### Point System
+- **1 Pembelian** = **1 Poin** (configurable via environment variable)
+- Progress tracking dengan visual indicators
+- Automatic point calculation per transaction
+
+## 🌟 Key Components
+
+### QR Code Integration
+- Auto-generated QR codes untuk setiap coffee shop
+- Direct registration link dengan shop parameter
+- Downloadable dan printable QR codes
+
+### Mobile-First Design
+- Responsive layout untuk semua device sizes
+- Touch-friendly interface untuk mobile users
+- Progressive Web App ready
+
+### Analytics Dashboard
+- Real-time statistics untuk merchants
+- Customer loyalty metrics
+- Revenue tracking dan trends
+- Export functionality untuk data analysis
+
+## 🚀 Deployment
+
+### Vercel (Recommended)
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# Install Vercel CLI
+npm i -g vercel
+
+# Deploy
+vercel
+
+# Set environment variables di Vercel dashboard
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Manual Deployment
+1. Build aplikasi: `npm run build`
+2. Setup production database
+3. Set environment variables
+4. Deploy built files ke hosting provider
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🔒 Security Features
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Password hashing dengan bcrypt
+- Input validation dan sanitization
+- SQL injection protection via Prisma
+- CSRF protection
+- Secure session management
 
-## Learn More
+## 📱 API Endpoints
 
-To learn more about Next.js, take a look at the following resources:
+### Authentication
+- `POST /api/auth/register/customer` - Customer registration
+- `POST /api/auth/register/merchant` - Merchant registration  
+- `POST /api/auth/login` - User login
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Customer APIs (Coming Soon)
+- `GET /api/customer/loyalty-cards` - Get customer cards
+- `GET /api/customer/transactions` - Transaction history
+- `POST /api/customer/redeem` - Redeem rewards
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Merchant APIs (Coming Soon)
+- `GET /api/merchant/dashboard` - Dashboard data
+- `GET /api/merchant/customers` - Customer list
+- `POST /api/merchant/transaction` - Add transaction
 
-## Deploy on Vercel
+## 🤝 Contributing
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Fork repository
+2. Create feature branch: `git checkout -b feature/amazing-feature`
+3. Commit changes: `git commit -m 'Add amazing feature'`
+4. Push to branch: `git push origin feature/amazing-feature`
+5. Open Pull Request
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🎉 Demo Accounts
+
+### Customer Demo
+- Email: `customer@demo.com`
+- Password: `demo123`
+
+### Merchant Demo
+- Email: `merchant@demo.com` 
+- Password: `demo123`
+
+## 📞 Support
+
+Untuk pertanyaan atau dukungan:
+- 📧 Email: support@coffeeloylaty.com
+- 💬 Issues: [GitHub Issues](https://github.com/username/digitalloyaltycard/issues)
+
+---
+
+**Dibuat dengan ❤️ untuk komunitas coffee shop Indonesia**

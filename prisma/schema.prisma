@@ -1,0 +1,146 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+// User model for both customers and merchants
+model User {
+  id          String   @id @default(cuid())
+  email       String   @unique
+  phone       String?  @unique
+  name        String
+  role        Role     @default(CUSTOMER)
+  password    String
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Customer relations
+  loyaltyCards LoyaltyCard[]
+  transactions Transaction[]
+
+  // Merchant relations
+  coffeeShop   CoffeeShop?
+
+  @@map("users")
+}
+
+// Coffee Shop model for merchants
+model CoffeeShop {
+  id          String   @id @default(cuid())
+  name        String
+  address     String
+  phone       String?
+  email       String?
+  description String?
+  logo        String?
+  qrCode      String   @unique // QR code for customer registration
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  owner        User          @relation(fields: [ownerId], references: [id])
+  ownerId      String        @unique
+  loyaltyCards LoyaltyCard[]
+  rewards      Reward[]
+  transactions Transaction[]
+
+  @@map("coffee_shops")
+}
+
+// Loyalty Card model
+model LoyaltyCard {
+  id          String   @id @default(cuid())
+  points      Int      @default(0)
+  totalSpent  Float    @default(0)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  customer     User         @relation(fields: [customerId], references: [id])
+  customerId   String
+  coffeeShop   CoffeeShop   @relation(fields: [coffeeShopId], references: [id])
+  coffeeShopId String
+  transactions Transaction[]
+
+  @@unique([customerId, coffeeShopId])
+  @@map("loyalty_cards")
+}
+
+// Transaction model for tracking purchases and rewards
+model Transaction {
+  id             String          @id @default(cuid())
+  type           TransactionType
+  amount         Float
+  points         Int             @default(0)
+  description    String?
+  status         TransactionStatus @default(COMPLETED)
+  paymentMethod  String?
+  receiptNumber  String?
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+
+  // Relations
+  customer       User         @relation(fields: [customerId], references: [id])
+  customerId     String
+  loyaltyCard    LoyaltyCard  @relation(fields: [loyaltyCardId], references: [id])
+  loyaltyCardId  String
+  coffeeShop     CoffeeShop   @relation(fields: [coffeeShopId], references: [id])
+  coffeeShopId   String
+  reward         Reward?      @relation(fields: [rewardId], references: [id])
+  rewardId       String?
+
+  @@map("transactions")
+}
+
+// Reward model for defining available rewards
+model Reward {
+  id           String   @id @default(cuid())
+  name         String
+  description  String?
+  pointsRequired Int
+  value        Float    @default(0) // Monetary value of reward
+  isActive     Boolean  @default(true)
+  maxRedemptions Int?   // Optional limit on redemptions
+  currentRedemptions Int @default(0)
+  validFrom    DateTime @default(now())
+  validUntil   DateTime?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // Relations
+  coffeeShop   CoffeeShop    @relation(fields: [coffeeShopId], references: [id])
+  coffeeShopId String
+  transactions Transaction[]
+
+  @@map("rewards")
+}
+
+// Enums
+enum Role {
+  CUSTOMER
+  MERCHANT
+  ADMIN
+}
+
+enum TransactionType {
+  PURCHASE
+  REWARD_REDEMPTION
+  POINTS_ADJUSTMENT
+}
+
+enum TransactionStatus {
+  PENDING
+  COMPLETED
+  CANCELLED
+  REFUNDED
+}

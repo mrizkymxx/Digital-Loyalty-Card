@@ -6,8 +6,11 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true
   },
+  // Set turbopack root to silence the lockfile warning
   experimental: {
-    esmExternals: false
+    turbo: {
+      root: '/Users/muhammadrizky/project/digitalloyaltycard'
+    }
   }
 };
 

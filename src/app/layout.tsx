@@ -15,35 +15,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Digital Loyalty Card",
   description: "Sistem loyalitas digital untuk coffee shop Indonesia. Kumpulkan poin setiap pembelian kopi dan dapatkan reward menarik. Mirip StampMe untuk coffee shop lokal.",
-  keywords: "coffee loyalty card, digital loyalty, coffee shop, poin kopi, reward kopi, loyalty program, coffee indonesia",
-  authors: [{ name: "Muhammad Rizky" }],
-  icons: {
-    icon: "/favicon.svg",
-    apple: "/favicon.svg",
-  },
-  manifest: "/manifest.json",
-  openGraph: {
-    title: "Coffee Loyalty Card - Digital Loyalty untuk Coffee Shop",
-    description: "Sistem loyalitas digital untuk coffee shop Indonesia. Kumpulkan poin setiap pembelian kopi dan dapatkan reward menarik.",
-    url: "https://digital-loyalty-card.netlify.app",
-    siteName: "Coffee Loyalty Card",
-    images: [
-      {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Coffee Loyalty Card System",
-      },
-    ],
-    locale: "id_ID",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Coffee Loyalty Card - Digital Loyalty untuk Coffee Shop",
-    description: "Sistem loyalitas digital untuk coffee shop Indonesia",
-    images: ["/og-image.png"],
-  },
+  icons: "/favicon.svg",
 };
 
 export default function RootLayout({
